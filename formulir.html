@@ -1,0 +1,108 @@
+<!DOCTYPE html> 
+<html lang="id"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Formulir Pendaftaran</title> 
+    <style> 
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            padding: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            max-width: 400px; 
+        } 
+        label { 
+            display: block; 
+            margin: 10px 0 5px; 
+        } 
+        input, select { 
+            width: 100%; 
+            padding: 8px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        } 
+        button { 
+            padding: 10px; 
+            background-color: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        } 
+        button:hover { 
+            background-color: #218838; 
+        } 
+    </style> 
+</head> 
+<body> 
+ 
+    <h2>Formulir Pendaftaran Mahasiswa</h2> 
+    <form id="registrationForm"> 
+        <label for="nim">NIM:</label> 
+        <input type="text" id="nim" name="nim" required> 
+ 
+        <label for="nama">Nama:</label> 
+        <input type="text" id="nama" name="nama" required> 
+ 
+        <label for="tempat_tanggal_lahir">Tempat, Tanggal Lahir:</label> 
+        <input type="text" id="tempat_tanggal_lahir" name="tempat_tanggal_lahir" placeholder="Contoh: Jakarta, 1 Januari 2000" required> 
+ 
+        <label for="jenis_kelamin">Jenis Kelamin:</label> 
+        <select id="jenis_kelamin" name="jenis_kelamin" required> 
+            <option value="laki-laki">Laki-laki</option> 
+            <option value="perempuan">Perempuan</option> 
+        </select> 
+ 
+        <label for="prodi">Program Studi:</label> 
+        <select id="prodi" name="prodi" required> 
+            <option value="t1">T1</option> 
+            <option value="t2">T2</option> 
+            <option value="t3">T3</option> 
+            <option value="t4">T4</option> 
+            <option value="t5">T5</option> 
+        </select> 
+ 
+        <label for="kelas">Kelas:</label> 
+        <select id="kelas" name="kelas" required> 
+            <option value="reguler">Reguler</option> 
+            <option value="kelas_khusus">Kelas Khusus</option> 
+        </select> 
+ 
+        <button type="button" onclick="generateTXT()">Submit</button> 
+    </form> 
+ 
+    <script> 
+        function generateTXT() { 
+            const form = document.getElementById('registrationForm'); 
+            const formData = new FormData(form); 
+            const data = []; 
+ 
+            // Menambahkan header 
+            data.push('NIM: ' + formData.get('nim')); 
+            data.push('Nama: ' + formData.get('nama')); 
+            data.push('Tempat, Tanggal Lahir: ' + formData.get('tempat_tanggal_lahir')); 
+            data.push('Jenis Kelamin: ' + formData.get('jenis_kelamin')); 
+            data.push('Program Studi: ' + formData.get('prodi')); 
+            data.push('Kelas: ' + formData.get('kelas')); 
+ 
+            // Mengonversi array data menjadi string teks 
+            const txtContent = data.join('\n'); 
+ 
+            // Membuat Blob dari konten teks 
+            const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' }); 
+            const link = document.createElement('a'); 
+            const url = URL.createObjectURL(blob); 
+            link.setAttribute('href', url); 
+            link.setAttribute('download', 'data.txt'); 
+            link.style.visibility = 'hidden'; 
+            document.body.appendChild(link); 
+            link.click(); 
+            document.body.removeChild(link); 
+        } 
+    </script> 
+ 
+</body> 
+</html>
